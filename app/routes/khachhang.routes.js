@@ -39,10 +39,10 @@ module.exports = function (app) {
 
   app.put(
     "/api/khach-hang/sua",
-    [
-      (req, res, next) =>
-        verify.checkDuplicateUsernameOrEmail(req, res, next, KhachHang),
-    ],
+    // [
+    //   (req, res, next) =>
+    //     verify.checkDuplicateUsernameOrEmail(req, res, next, KhachHang),
+    // ],
     [authJwt.verifyToken],
     controller.updateKhachHang
   );

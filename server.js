@@ -6,7 +6,10 @@ const app = express();
 const db = require("./app/models");
 
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // tên miền của trang web của bạn
+  credentials: true // cho phép gửi cookie
+}));
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -35,6 +38,7 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/nhanvien.routes')(app);
 require('./app/routes/phong.routes')(app);
 require('./app/routes/khachhang.routes')(app);
+require('./app/routes/datphong.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

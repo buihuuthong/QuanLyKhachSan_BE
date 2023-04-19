@@ -27,7 +27,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     MaChucVu: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
   }, {
     tableName: "NhanVien",

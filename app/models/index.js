@@ -27,5 +27,13 @@ db.sequelize = sequelize;
 db.nhanvien = require("../models/nhanvien.model.js")(sequelize, Sequelize);
 db.khachhang = require("../models/khachhang.model.js")(sequelize, Sequelize);
 db.phong = require("../models/phong.model.js")(sequelize, Sequelize);
+db.datphong = require("../models/datphong.model.js")(sequelize, Sequelize);
+db.phuthudatphong = require("../models/phuthudatphong.model.js")(sequelize, Sequelize);
+db.chucvu = require("../models/chucvu.model.js")(sequelize, Sequelize);
+
+db.nhanvien?.belongsTo(db.chucvu, {
+  foreignKey: 'MaChucVu',
+  as: 'ChucVu'
+});
 
 module.exports = db;

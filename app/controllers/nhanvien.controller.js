@@ -1,20 +1,22 @@
 const db = require("../models");
 const NhanVien = db.nhanvien;
+const ChucVu = db.chucvu;
 const bcrypt = require("bcryptjs");
+const { getPagination, getPagingData } = require("../middlewares/pagination");
 
 // Lấy thông tin nhân viên hiện tại
-exports.getCurrentNhanVien = (req, res) => {
-  NhanVien.findByPk(req.userId)
-    .then((nhanvien) => {
-      if (!nhanvien) {
-        return res.status(404).send({ message: "Không tìm thấy nhân viên." });
-      }
-      res.send(nhanvien);
-    })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
-    });
-};
+// exports.getCurrentNhanVien = (req, res) => {
+//   NhanVien.findByPk(req.userId)
+//     .then((nhanvien) => {
+//       if (!nhanvien) {
+//         return res.status(404).send({ message: "Không tìm thấy nhân viên." });
+//       }
+//       res.send(nhanvien);
+//     })
+//     .catch((err) => {
+//       res.status(500).send({ message: err.message });
+//     });
+// };
 
 // Cập nhật thông tin nhân viên hiện tại
 exports.updateCurrentNhanVien = (req, res) => {
@@ -49,8 +51,43 @@ exports.updateCurrentNhanVien = (req, res) => {
 
 // Lấy danh sách nhân viên
 exports.getAllNhanVien = (req, res) => {
-  NhanVien.findAll()
+  const { page, size } = req.query;
+  const { limit, offset } = getPagination(page, size);
+  NhanVien.findAndCountAll({
+    include: [
+      {
+        model: ChucVu,
+        as: "ChucVu",
+      },
+    ],
+    limit,
+    offset,
+  })
     .then((nhanvien) => {
+      const response = getPagingData(nhanvien, page, limit);
+      res.send(response);
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
+// Lấy nhân viên by id
+exports.getNhanVienById = (req, res) => {
+  const id = req.query.id;
+  NhanVien.findOne({
+    include: [
+      {
+        model: ChucVu,
+        as: "ChucVu",
+      },
+    ],
+    where: { MaNhanVien: id },
+  })
+    .then((nhanvien) => {
+      if (!nhanvien) {
+        return res.status(404).send({ message: "Không có nhân viên" });
+      }
       res.send(nhanvien);
     })
     .catch((err) => {

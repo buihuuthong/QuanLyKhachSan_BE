@@ -1,6 +1,7 @@
 const db = require("../models");
 const KhachHang = db.khachhang;
 const bcrypt = require("bcryptjs");
+const { getPagination, getPagingData } = require("../middlewares/pagination");
 
 // Lấy thông tin khách hàng hiện tại
 exports.getCurrentKhachHang = (req, res) => {
@@ -48,9 +49,15 @@ exports.updateCurrentKhachHang = (req, res) => {
 
 // Lấy danh sách khách hàng
 exports.getAllKhachHang = (req, res) => {
-  KhachHang.findAll()
+  const { page, size } = req.query;
+  const { limit, offset } = getPagination(page, size);
+  KhachHang.findAndCountAll({
+    limit,
+    offset
+  })
     .then((khachhang) => {
-      res.send(khachhang);
+      const response = getPagingData(khachhang, page, limit);
+      res.send(response);
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
@@ -72,6 +79,21 @@ exports.createKhachHang = (req, res) => {
   })
     .then(() => {
       res.status(201).send({ message: "Thêm khách hàng thành công!" });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
+// Lấy khách hàng by id
+exports.getKhachHangById = (req, res) => {
+  const id = req.query.id;
+  KhachHang.findOne({ where: { MaKhachHang: id } })
+    .then((khachhang) => {
+      if (!khachhang) {
+        return res.status(404).send({ message: "Không có khách hàng" });
+      }
+      res.send(khachhang);
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });

@@ -1,11 +1,18 @@
 const db = require("../models");
 const Phong = db.phong;
+const { getPagination, getPagingData } = require("../middlewares/pagination");
 
 // Lấy danh sách phòng
 exports.getAllPhong = (req, res) => {
-  Phong.findAll()
+  const { page, size } = req.query;
+  const { limit, offset } = getPagination(page, size);
+  Phong.findAndCountAll({
+    limit,
+    offset
+  })
     .then((phong) => {
-      res.send(phong);
+      const response = getPagingData(phong, page, limit);
+      res.send(response);
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
@@ -21,6 +28,21 @@ exports.createPhong = (req, res) => {
   })
     .then(() => {
       res.status(201).send({ message: "Tạo phòng thành công!" });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
+// Lấy phòng by id
+exports.getPhongById = (req, res) => {
+  const id = req.query.id;
+  Phong.findOne({ where: { MaPhong: id } })
+    .then((phong) => {
+      if (!phong) {
+        return res.status(404).send({ message: "Không có phòng" });
+      }
+      res.send(phong);
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });

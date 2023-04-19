@@ -9,11 +9,11 @@ module.exports = function (app) {
     next();
   });
 
-  app.get(
-    "/api/nhan-vien/tai-khoan",
-    [authJwt.verifyToken],
-    controller.getCurrentNhanVien
-  );
+  // app.get(
+  //   "/api/nhan-vien/tai-khoan",
+  //   [authJwt.verifyToken],
+  //   controller.getCurrentNhanVien
+  // );
 
   app.put(
     "/api/nhan-vien/tai-khoan",
@@ -25,6 +25,12 @@ module.exports = function (app) {
     "/api/nhan-vien/danh-sach",
     [authJwt.verifyToken],
     controller.getAllNhanVien
+  );
+
+  app.get(
+    "/api/nhan-vien/tai-khoan",
+    [authJwt.verifyToken],
+    controller.getNhanVienById
   );
 
   app.post(
@@ -39,10 +45,10 @@ module.exports = function (app) {
 
   app.put(
     "/api/nhan-vien/sua",
-    [
-      (req, res, next) =>
-        verify.checkDuplicateUsernameOrEmail(req, res, next, NhanVien),
-    ],
+    // [
+    //   (req, res, next) =>
+    //     verify.checkDuplicateUsernameOrEmail(req, res, next, NhanVien),
+    // ],
     [authJwt.verifyToken],
     controller.updateNhanVien
   );

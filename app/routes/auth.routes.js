@@ -2,14 +2,11 @@ const { verify } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
 const db = require("../models");
 const NhanVien = db.nhanvien;
-const KhachHang = db.khachhang
+const KhachHang = db.khachhang;
 
-module.exports = function(app) {
-  app.use(function(req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, Content-Type, Accept"
-    );
+module.exports = function (app) {
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
     next();
   });
 
@@ -17,7 +14,8 @@ module.exports = function(app) {
   app.post(
     "/api/nhanvien/signup",
     [
-      (req, res, next) => verify.checkDuplicateUsernameOrEmail(req, res, next, NhanVien)
+      (req, res, next) =>
+        verify.checkDuplicateUsernameOrEmail(req, res, next, NhanVien),
     ],
     controller.signupNhanVien
   );
@@ -28,7 +26,8 @@ module.exports = function(app) {
   app.post(
     "/api/khachhang/signup",
     [
-      (req, res, next) => verify.checkDuplicateUsernameOrEmail(req, res, next, KhachHang)
+      (req, res, next) =>
+        verify.checkDuplicateUsernameOrEmail(req, res, next, KhachHang),
     ],
     controller.signupKhachHang
   );
@@ -36,6 +35,6 @@ module.exports = function(app) {
   app.post("/api/khachhang/signin", controller.signinKhachHang);
 
   // Chung
-  
+
   app.post("/api/auth/signout", controller.signout);
 };
