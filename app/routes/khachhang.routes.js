@@ -9,16 +9,16 @@ module.exports = function (app) {
     next();
   });
 
-  app.get(
-    "/api/khach-hang/tai-khoan",
-    [authJwt.verifyToken],
-    controller.getCurrentKhachHang
-  );
-
   app.put(
     "/api/khach-hang/tai-khoan",
     [authJwt.verifyToken],
     controller.updateCurrentKhachHang
+  );
+
+  app.get(
+    "/api/khach-hang/tai-khoan",
+    [authJwt.verifyToken],
+    controller.getKhachHangById
   );
 
   app.get(

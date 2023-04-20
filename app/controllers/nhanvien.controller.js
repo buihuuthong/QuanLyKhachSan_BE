@@ -4,20 +4,6 @@ const ChucVu = db.chucvu;
 const bcrypt = require("bcryptjs");
 const { getPagination, getPagingData } = require("../middlewares/pagination");
 
-// Lấy thông tin nhân viên hiện tại
-// exports.getCurrentNhanVien = (req, res) => {
-//   NhanVien.findByPk(req.userId)
-//     .then((nhanvien) => {
-//       if (!nhanvien) {
-//         return res.status(404).send({ message: "Không tìm thấy nhân viên." });
-//       }
-//       res.send(nhanvien);
-//     })
-//     .catch((err) => {
-//       res.status(500).send({ message: err.message });
-//     });
-// };
-
 // Cập nhật thông tin nhân viên hiện tại
 exports.updateCurrentNhanVien = (req, res) => {
   const ngaySinh = new Date(req.body.NgaySinh);

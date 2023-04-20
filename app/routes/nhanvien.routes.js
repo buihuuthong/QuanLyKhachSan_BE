@@ -9,14 +9,8 @@ module.exports = function (app) {
     next();
   });
 
-  // app.get(
-  //   "/api/nhan-vien/tai-khoan",
-  //   [authJwt.verifyToken],
-  //   controller.getCurrentNhanVien
-  // );
-
   app.put(
-    "/api/nhan-vien/tai-khoan",
+    "/api/tai-khoan",
     [authJwt.verifyToken],
     controller.updateCurrentNhanVien
   );

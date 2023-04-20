@@ -3,20 +3,6 @@ const KhachHang = db.khachhang;
 const bcrypt = require("bcryptjs");
 const { getPagination, getPagingData } = require("../middlewares/pagination");
 
-// Lấy thông tin khách hàng hiện tại
-exports.getCurrentKhachHang = (req, res) => {
-  KhachHang.findByPk(req.userId)
-    .then((khachhang) => {
-      if (!khachhang) {
-        return res.status(404).send({ message: "Không tìm thấy khách hàng." });
-      }
-      res.send(khachhang);
-    })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
-    });
-};
-
 // Cập nhật thông tin khách hàng hiện tại
 exports.updateCurrentKhachHang = (req, res) => {
   const ngaySinh = new Date(req.body.NgaySinh);
