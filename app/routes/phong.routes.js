@@ -16,6 +16,12 @@ module.exports = function(app) {
     controller.getAllPhong
   );
 
+  app.get(
+    "/api/phong/thong-tin",
+    [authJwt.verifyToken],
+    controller.getPhongById
+  );
+
   app.post(
     "/api/phong/tao-phong",
     [authJwt.verifyToken],

@@ -13,6 +13,12 @@ module.exports = function (app) {
     controller.getAllDatPhong
   );
 
+  app.get(
+    "/api/dat-phong/don-dat",
+    [authJwt.verifyToken],
+    controller.getDatPhongById
+  );
+
   app.post(
     "/api/dat-phong/tao-don",
     [authJwt.verifyToken],

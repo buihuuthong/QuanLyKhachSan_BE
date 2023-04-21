@@ -1,10 +1,34 @@
 const db = require("../models");
 const DatPhong = db.datphong;
+const { getPagination, getPagingData } = require("../middlewares/pagination");
 
 // Lấy danh sách đặt phòng
 exports.getAllDatPhong = (req, res) => {
-  DatPhong.findAll()
+  const { page, size } = req.query;
+  const { limit, offset } = getPagination(page, size);
+  DatPhong.findAndCountAll({
+    limit,
+    offset,
+  })
     .then((datphong) => {
+      const response = getPagingData(datphong, page, limit);
+      res.send(response);
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
+// Lấy đơn đặt by id
+exports.getDatPhongById = (req, res) => {
+  const id = req.query.id;
+  DatPhong.findOne({
+    where: { MaDatPhong: id },
+  })
+    .then((datphong) => {
+      if (!datphong) {
+        return res.status(404).send({ message: "Không có đơn đặt" });
+      }
       res.send(datphong);
     })
     .catch((err) => {
