@@ -47,6 +47,7 @@ exports.createDatPhong = (req, res) => {
     NgayTra: req.body.NgayTra,
     SoNgayThue: req.body.SoNgayThue,
     GiaThue: req.body.GiaThue,
+    PhuThu: req.body.PhuThu,
     TongTien: req.body.TongTien,
     GhiChu: req.body.GhiChu,
     MaNhanVien: req.body.MaNhanVien,
