@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     {
       tableName: "ChucVu",
-      timestamps: false, // If your table doesn't have timestamps, you can disable them here
+      timestamps: false,
     }
   );
 

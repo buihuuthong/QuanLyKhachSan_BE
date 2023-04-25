@@ -21,7 +21,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     {
       tableName: "PhuThuDatPhong",
-      timestamps: false, // If your table doesn't have timestamps, you can disable them here
+      timestamps: false,
     });
   
     return PhuThuDatPhong;

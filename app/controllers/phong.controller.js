@@ -1,5 +1,7 @@
 const db = require("../models");
 const Phong = db.phong;
+const LoaiPhong = db.loaiphong;
+const TinhTrangPhong = db.tinhtrangphong;
 const { getPagination, getPagingData } = require("../middlewares/pagination");
 
 // Lấy danh sách phòng
@@ -7,8 +9,18 @@ exports.getAllPhong = (req, res) => {
   const { page, size } = req.query;
   const { limit, offset } = getPagination(page, size);
   Phong.findAndCountAll({
+    include: [
+      {
+        model: LoaiPhong,
+        as: "LoaiPhong",
+      },
+      {
+        model: TinhTrangPhong,
+        as: "TinhTrangPhong",
+      },
+    ],
     limit,
-    offset
+    offset,
   })
     .then((phong) => {
       const response = getPagingData(phong, page, limit);
@@ -37,7 +49,19 @@ exports.createPhong = (req, res) => {
 // Lấy phòng by id
 exports.getPhongById = (req, res) => {
   const id = req.query.id;
-  Phong.findOne({ where: { MaPhong: id } })
+  Phong.findOne({
+    include: [
+      {
+        model: LoaiPhong,
+        as: "LoaiPhong",
+      },
+      {
+        model: TinhTrangPhong,
+        as: "TinhTrangPhong",
+      },
+    ],
+    where: { MaPhong: id },
+  })
     .then((phong) => {
       if (!phong) {
         return res.status(404).send({ message: "Không có phòng" });

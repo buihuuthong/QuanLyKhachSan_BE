@@ -30,10 +30,22 @@ db.phong = require("../models/phong.model.js")(sequelize, Sequelize);
 db.datphong = require("../models/datphong.model.js")(sequelize, Sequelize);
 db.phuthudatphong = require("../models/phuthudatphong.model.js")(sequelize, Sequelize);
 db.chucvu = require("../models/chucvu.model.js")(sequelize, Sequelize);
+db.loaiphong = require("../models/loaiphong.model.js")(sequelize, Sequelize);
+db.tinhtrangphong = require("../models/tinhtrangphong.model.js")(sequelize, Sequelize);
 
 db.nhanvien?.belongsTo(db.chucvu, {
   foreignKey: 'MaChucVu',
   as: 'ChucVu'
+});
+
+db.phong?.belongsTo(db.loaiphong, {
+  foreignKey: 'MaLoaiPhong',
+  as: 'LoaiPhong'
+});
+
+db.phong?.belongsTo(db.tinhtrangphong, {
+  foreignKey: 'MaTinhTrang',
+  as: 'TinhTrangPhong'
 });
 
 module.exports = db;
