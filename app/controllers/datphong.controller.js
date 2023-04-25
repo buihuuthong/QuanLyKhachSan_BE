@@ -1,5 +1,9 @@
 const db = require("../models");
 const DatPhong = db.datphong;
+const KhachHang = db.khachhang;
+const Phong = db.phong;
+const NhanVien = db.nhanvien;
+const TrangThaiDat = db.trangthaidat;
 const { getPagination, getPagingData } = require("../middlewares/pagination");
 
 // Lấy danh sách đặt phòng
@@ -7,6 +11,28 @@ exports.getAllDatPhong = (req, res) => {
   const { page, size } = req.query;
   const { limit, offset } = getPagination(page, size);
   DatPhong.findAndCountAll({
+    include: [
+      {
+        model: KhachHang,
+        as: "KhachHang",
+        attributes: ["HoTen"],
+      },
+      {
+        model: Phong,
+        as: "Phong",
+        attributes: ["TenPhong"],
+      },
+      {
+        model: NhanVien,
+        as: "NhanVien",
+        attributes: ["HoTen"],
+      },
+      {
+        model: TrangThaiDat,
+        as: "TrangThaiDat",
+        attributes: ["TenTrangThai"],
+      },
+    ],
     limit,
     offset,
   })
@@ -23,6 +49,28 @@ exports.getAllDatPhong = (req, res) => {
 exports.getDatPhongById = (req, res) => {
   const id = req.query.id;
   DatPhong.findOne({
+    include: [
+      {
+        model: KhachHang,
+        as: "KhachHang",
+        attributes: ["HoTen"],
+      },
+      {
+        model: Phong,
+        as: "Phong",
+        attributes: ["TenPhong"],
+      },
+      {
+        model: NhanVien,
+        as: "NhanVien",
+        attributes: ["HoTen"],
+      },
+      {
+        model: TrangThaiDat,
+        as: "TrangThaiDat",
+        attributes: ["TenTrangThai"],
+      },
+    ],
     where: { MaDatPhong: id },
   })
     .then((datphong) => {
