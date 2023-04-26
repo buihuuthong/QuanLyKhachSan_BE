@@ -1,4 +1,5 @@
 const db = require("../models");
+const nodemailer = require('nodemailer');
 const DatPhong = db.datphong;
 const KhachHang = db.khachhang;
 const Phong = db.phong;
@@ -94,6 +95,8 @@ exports.createDatPhong = (req, res) => {
     NgayNhan: req.body.NgayNhan,
     NgayTra: req.body.NgayTra,
     SoNgayThue: req.body.SoNgayThue,
+    NguoiLon: req.body.NguoiLon,
+    TreEm: req.body.TreEm,
     GiaThue: req.body.GiaThue,
     PhuThu: req.body.PhuThu,
     TongTien: req.body.TongTien,
@@ -102,6 +105,29 @@ exports.createDatPhong = (req, res) => {
     MaTrangThai: req.body.MaTrangThai,
   })
     .then(() => {
+      // Gửi email tới khách hàng
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'buihuuthong2806@gmail.com',
+          pass: 'lqvpypoaauafjbhs',
+        },
+      });
+      
+      const mailOptions = {
+        from: 'buihuuthong2806@gmail.com',
+        to: 'shinno2107@gmail.com', // Thay thế bằng địa chỉ email của khách hàng
+        subject: 'Đơn đặt phòng thành công!',
+        text: 'Cảm ơn bạn đã đặt phòng của chúng tôi.',
+      };
+      
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
       res.status(201).send({ message: "Tạo đơn đặt phòng thành công!" });
     })
     .catch((err) => {
@@ -121,6 +147,8 @@ exports.updateDatPhong = (req, res) => {
       NgayNhan: req.body.NgayNhan,
       NgayTra: req.body.NgayTra,
       SoNgayThue: req.body.SoNgayThue,
+      NguoiLon: req.body.NguoiLon,
+      TreEm: req.body.TreEm,
       GiaThue: req.body.GiaThue,
       TongTien: req.body.TongTien,
       GhiChu: req.body.GhiChu,

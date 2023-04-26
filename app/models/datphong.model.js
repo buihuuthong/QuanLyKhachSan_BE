@@ -26,6 +26,12 @@ module.exports = (sequelize, Sequelize) => {
       SoNgayThue: {
         type: Sequelize.INTEGER,
       },
+      NguoiLon: {
+        type: Sequelize.INTEGER,
+      },
+      TreEm: {
+        type: Sequelize.INTEGER,
+      },
       GiaThue: {
         type: Sequelize.BIGINT,
       },
