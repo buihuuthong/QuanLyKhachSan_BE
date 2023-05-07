@@ -7,6 +7,9 @@ const NhanVien = db.nhanvien;
 const TrangThaiDat = db.trangthaidat;
 const { getPagination, getPagingData } = require("../middlewares/pagination");
 
+var today = new Date();
+const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
 // Lấy danh sách đặt phòng
 exports.getAllDatPhong = (req, res) => {
   const { page, size } = req.query;
@@ -16,22 +19,18 @@ exports.getAllDatPhong = (req, res) => {
       {
         model: KhachHang,
         as: "KhachHang",
-        attributes: ["HoTen"],
       },
       {
         model: Phong,
         as: "Phong",
-        attributes: ["TenPhong"],
       },
       {
         model: NhanVien,
         as: "NhanVien",
-        attributes: ["HoTen"],
       },
       {
         model: TrangThaiDat,
         as: "TrangThaiDat",
-        attributes: ["TenTrangThai"],
       },
     ],
     limit,
@@ -54,22 +53,18 @@ exports.getDatPhongById = (req, res) => {
       {
         model: KhachHang,
         as: "KhachHang",
-        attributes: ["HoTen"],
       },
       {
         model: Phong,
         as: "Phong",
-        attributes: ["TenPhong"],
       },
       {
         model: NhanVien,
         as: "NhanVien",
-        attributes: ["HoTen"],
       },
       {
         model: TrangThaiDat,
         as: "TrangThaiDat",
-        attributes: ["TenTrangThai"],
       },
     ],
     where: { MaDatPhong: id },
@@ -90,8 +85,8 @@ exports.createDatPhong = (req, res) => {
   DatPhong.create({
     MaKhachHang: req.body.MaKhachHang,
     MaPhong: req.body.MaPhong,
-    NgayTao: req.body.NgayTao,
-    NgaySua: req.body.NgaySua,
+    NgayTao: date,
+    NgaySua: date,
     NgayNhan: req.body.NgayNhan,
     NgayTra: req.body.NgayTra,
     SoNgayThue: req.body.SoNgayThue,
@@ -116,7 +111,7 @@ exports.createDatPhong = (req, res) => {
       
       const mailOptions = {
         from: 'buihuuthong2806@gmail.com',
-        to: 'shinno2107@gmail.com', // Thay thế bằng địa chỉ email của khách hàng
+        to: req.body.email,
         subject: 'Đơn đặt phòng thành công!',
         text: 'Cảm ơn bạn đã đặt phòng của chúng tôi.',
       };
@@ -142,14 +137,14 @@ exports.updateDatPhong = (req, res) => {
     {
       MaKhachHang: req.body.MaKhachHang,
       MaPhong: req.body.MaPhong,
-      NgayTao: req.body.NgayTao,
-      NgaySua: req.body.NgaySua,
+      NgaySua: date,
       NgayNhan: req.body.NgayNhan,
       NgayTra: req.body.NgayTra,
       SoNgayThue: req.body.SoNgayThue,
       NguoiLon: req.body.NguoiLon,
       TreEm: req.body.TreEm,
       GiaThue: req.body.GiaThue,
+      PhuThu: req.body.PhuThu,
       TongTien: req.body.TongTien,
       GhiChu: req.body.GhiChu,
       MaNhanVien: req.body.MaNhanVien,

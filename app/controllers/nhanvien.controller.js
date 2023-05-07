@@ -109,8 +109,6 @@ exports.updateNhanVien = (req, res) => {
   const ngaySinh = new Date(req.body.NgaySinh);
   NhanVien.update(
     {
-      TaiKhoan: req.body.TaiKhoan,
-      MatKhau: bcrypt.hashSync(req.body.MatKhau, 8),
       HoTen: req.body.HoTen,
       NgaySinh: ngaySinh,
       DiaChi: req.body.DiaChi,

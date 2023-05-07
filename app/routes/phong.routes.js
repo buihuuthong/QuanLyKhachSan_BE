@@ -12,13 +12,13 @@ module.exports = function(app) {
 
   app.get(
     "/api/phong/danh-sach-phong",
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     controller.getAllPhong
   );
 
   app.get(
     "/api/phong/thong-tin",
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     controller.getPhongById
   );
 

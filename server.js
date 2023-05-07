@@ -39,6 +39,7 @@ require('./app/routes/nhanvien.routes')(app);
 require('./app/routes/phong.routes')(app);
 require('./app/routes/khachhang.routes')(app);
 require('./app/routes/datphong.routes')(app);
+require('./app/routes/service.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

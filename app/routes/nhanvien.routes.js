@@ -39,10 +39,6 @@ module.exports = function (app) {
 
   app.put(
     "/api/nhan-vien/sua",
-    // [
-    //   (req, res, next) =>
-    //     verify.checkDuplicateUsernameOrEmail(req, res, next, NhanVien),
-    // ],
     [authJwt.verifyToken],
     controller.updateNhanVien
   );

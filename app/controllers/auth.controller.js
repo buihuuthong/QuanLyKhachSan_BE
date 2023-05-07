@@ -125,13 +125,13 @@ exports.signinKhachHang = (req, res) => {
       req.session.token = token;
 
       res.status(200).send({
-        id: khachhang.MaKhachHang,
-        taikhoan: khachhang.TaiKhoan,
-        hoten: khachhang.HoTen,
-        ngaysinh: khachhang.NgaySinh,
-        diachi: khachhang.DiaChi,
-        sdt: khachhang.SDT,
-        email: khachhang.Email,
+        MaKhachHang: khachhang.MaKhachHang,
+        TaiKhoan: khachhang.TaiKhoan,
+        HoTen: khachhang.HoTen,
+        NgaySinh: khachhang.NgaySinh,
+        DiaChi: khachhang.DiaChi,
+        SDT: khachhang.SDT,
+        Email: khachhang.Email,
         accessToken: token,
       });
     })

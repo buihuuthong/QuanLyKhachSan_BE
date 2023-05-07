@@ -8,8 +8,6 @@ exports.updateCurrentKhachHang = (req, res) => {
   const ngaySinh = new Date(req.body.NgaySinh);
   KhachHang.update(
     {
-      TaiKhoan: req.body.TaiKhoan,
-      MatKhau: bcrypt.hashSync(req.body.MatKhau, 8),
       HoTen: req.body.HoTen,
       NgaySinh: ngaySinh,
       DiaChi: req.body.DiaChi,
@@ -18,7 +16,7 @@ exports.updateCurrentKhachHang = (req, res) => {
     },
     {
       where: {
-        MaKhachHang: req.userId,
+        MaKhachHang: req.body.MaKhachHang,
       },
     }
   )
@@ -52,16 +50,16 @@ exports.getAllKhachHang = (req, res) => {
 
 // Thêm khách hàng
 exports.createKhachHang = (req, res) => {
-  const ngaySinh = new Date(req.body.NgaySinh);
+  const ngaySinh = new Date(req.body.NgaySinh ?? '1991-01-01');
 
   KhachHang.create({
-    TaiKhoan: req.body.TaiKhoan,
-    MatKhau: bcrypt.hashSync(req.body.MatKhau, 8),
-    HoTen: req.body.HoTen,
+    TaiKhoan: req.body.TaiKhoan ?? null,
+    MatKhau: bcrypt.hashSync(req.body.MatKhau ?? '0000', 8),
+    HoTen: req.body.HoTen ?? null,
     NgaySinh: ngaySinh,
-    DiaChi: req.body.DiaChi,
-    SDT: req.body.SDT,
-    Email: req.body.Email,
+    DiaChi: req.body.DiaChi ?? null,
+    SDT: req.body.SDT ?? null,
+    Email: req.body.Email ?? null,
   })
     .then(() => {
       res.status(201).send({ message: "Thêm khách hàng thành công!" });
@@ -92,13 +90,11 @@ exports.updateKhachHang = (req, res) => {
   const ngaySinh = new Date(req.body.NgaySinh);
   KhachHang.update(
     {
-      TaiKhoan: req.body.TaiKhoan,
-      MatKhau: bcrypt.hashSync(req.body.MatKhau, 8),
       HoTen: req.body.HoTen,
       NgaySinh: ngaySinh,
+      Email: req.body.Email,
       DiaChi: req.body.DiaChi,
       SDT: req.body.SDT,
-      Email: req.body.Email,
     },
     { where: { MaKhachHang: id } }
   )

@@ -15,4 +15,16 @@ module.exports = function(app) {
     [authJwt.verifyToken],
     controller.getPhuThuById
   );
+
+  app.get(
+    "/api/services/tinh-trang-phong",
+    [authJwt.verifyToken],
+    controller.getDanhSachTinhTrangPhong
+  );
+
+  app.get(
+    "/api/services/trang-thai-dat",
+    [authJwt.verifyToken],
+    controller.getDanhSachTrangThaiDat
+  );
 };

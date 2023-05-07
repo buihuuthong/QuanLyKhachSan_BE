@@ -1,7 +1,6 @@
-const { authJwt, verify } = require("../middlewares");
+const { authJwt } = require("../middlewares");
 const controller = require("../controllers/khachhang.controller");
 const db = require("../models");
-const KhachHang = db.khachhang;
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -29,20 +28,12 @@ module.exports = function (app) {
 
   app.post(
     "/api/khach-hang/them",
-    [
-      (req, res, next) =>
-        verify.checkDuplicateUsernameOrEmail(req, res, next, KhachHang),
-    ],
     [authJwt.verifyToken],
     controller.createKhachHang
   );
 
   app.put(
     "/api/khach-hang/sua",
-    // [
-    //   (req, res, next) =>
-    //     verify.checkDuplicateUsernameOrEmail(req, res, next, KhachHang),
-    // ],
     [authJwt.verifyToken],
     controller.updateKhachHang
   );
