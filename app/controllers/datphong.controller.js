@@ -82,6 +82,7 @@ exports.getDatPhongById = (req, res) => {
 
 // Tạo đơn đặt phòng
 exports.createDatPhong = (req, res) => {
+  const Email = req.body.Email;
   DatPhong.create({
     MaKhachHang: req.body.MaKhachHang,
     MaPhong: req.body.MaPhong,
@@ -100,7 +101,6 @@ exports.createDatPhong = (req, res) => {
     MaTrangThai: req.body.MaTrangThai,
   })
     .then(() => {
-      // Gửi email tới khách hàng
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -111,9 +111,9 @@ exports.createDatPhong = (req, res) => {
       
       const mailOptions = {
         from: 'buihuuthong2806@gmail.com',
-        to: req.body.email,
+        to: Email,
         subject: 'Đơn đặt phòng thành công!',
-        text: 'Cảm ơn bạn đã đặt phòng của chúng tôi.',
+        text: 'Cảm ơn bạn đã đặt phòng của chúng tôi. \n\n Khách Sạn HT',
       };
       
       transporter.sendMail(mailOptions, (error, info) => {
