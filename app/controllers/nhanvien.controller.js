@@ -4,6 +4,18 @@ const ChucVu = db.chucvu;
 const bcrypt = require("bcryptjs");
 const { getPagination, getPagingData } = require("../middlewares/pagination");
 
+// Đếm số lượng nhân viên
+exports.countNhanVien = (req, res) => {
+  NhanVien.count()
+    .then((count) => {
+      res.json({ count });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
+
 // Cập nhật thông tin nhân viên hiện tại
 exports.updateCurrentNhanVien = (req, res) => {
   const ngaySinh = new Date(req.body.NgaySinh);

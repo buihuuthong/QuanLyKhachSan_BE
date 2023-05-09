@@ -4,6 +4,17 @@ const LoaiPhong = db.loaiphong;
 const TinhTrangPhong = db.tinhtrangphong;
 const { getPagination, getPagingData } = require("../middlewares/pagination");
 
+// Đếm số lượng phòng
+exports.countPhong = (req, res) => {
+  Phong.count()
+    .then((count) => {
+      res.json({ count });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
 // Lấy danh sách phòng
 exports.getAllPhong = (req, res) => {
   const { page, size } = req.query;

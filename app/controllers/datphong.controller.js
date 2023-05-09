@@ -11,6 +11,17 @@ const { getPagination, getPagingData } = require("../middlewares/pagination");
 var today = new Date();
 const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
+// Đếm số lượng đặt phòng
+exports.countDatPhong = (req, res) => {
+  DatPhong.count()
+    .then((count) => {
+      res.json({ count });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
 // Lấy danh sách đặt phòng
 exports.getAllDatPhong = (req, res) => {
   const { page, size } = req.query;

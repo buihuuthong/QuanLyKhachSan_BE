@@ -8,6 +8,12 @@ module.exports = function (app) {
     next();
   });
 
+  app.get(
+    "/api/khach-hang/so-luong",
+    [authJwt.verifyToken],
+    controller.countKhachHang
+  );
+
   app.put(
     "/api/khach-hang/tai-khoan",
     [authJwt.verifyToken],

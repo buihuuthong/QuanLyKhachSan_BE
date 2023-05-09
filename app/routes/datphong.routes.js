@@ -7,6 +7,13 @@ module.exports = function (app) {
     next();
   });
 
+
+  app.get(
+    "/api/dat-phong/so-luong",
+    [authJwt.verifyToken],
+    controller.countDatPhong
+  );
+
   app.get(
     "/api/dat-phong/danh-sach",
     [authJwt.verifyToken],

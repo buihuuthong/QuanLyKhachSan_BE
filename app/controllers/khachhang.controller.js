@@ -3,6 +3,17 @@ const KhachHang = db.khachhang;
 const bcrypt = require("bcryptjs");
 const { getPagination, getPagingData } = require("../middlewares/pagination");
 
+// Đếm số lượng khách hàng
+exports.countKhachHang = (req, res) => {
+  KhachHang.count()
+    .then((count) => {
+      res.json({ count });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
 // Cập nhật thông tin khách hàng hiện tại
 exports.updateCurrentKhachHang = (req, res) => {
   const ngaySinh = new Date(req.body.NgaySinh);

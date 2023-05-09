@@ -10,6 +10,13 @@ module.exports = function(app) {
     next();
   });
 
+
+  app.get(
+    "/api/phong/so-luong",
+    [authJwt.verifyToken],
+    controller.countPhong
+  );
+
   app.get(
     "/api/phong/danh-sach-phong",
     // [authJwt.verifyToken],

@@ -9,6 +9,12 @@ module.exports = function (app) {
     next();
   });
 
+  app.get(
+    "/api/nhan-vien/so-luong",
+    [authJwt.verifyToken],
+    controller.countNhanVien
+  );
+
   app.put(
     "/api/tai-khoan",
     [authJwt.verifyToken],
