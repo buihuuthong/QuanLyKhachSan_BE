@@ -54,12 +54,10 @@ exports.getPhongById = (req, res) => {
       {
         model: LoaiPhong,
         as: "LoaiPhong",
-        attributes: ["TenLoaiPhong"],
       },
       {
         model: TinhTrangPhong,
         as: "TinhTrangPhong",
-        attributes: ["TenTinhTrang"],
       },
     ],
     where: { MaPhong: id },

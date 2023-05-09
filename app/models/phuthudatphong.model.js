@@ -2,6 +2,7 @@ module.exports = (sequelize, Sequelize) => {
     const PhuThuDatPhong = sequelize.define("PhuThuDatPhong", {
       MaDatPhong: {
         type: Sequelize.INTEGER,
+        primaryKey: true,
       },
       PhuThu: {
         type: Sequelize.BIGINT,

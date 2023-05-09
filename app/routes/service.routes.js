@@ -10,10 +10,22 @@ module.exports = function(app) {
     next();
   });
 
+  app.post(
+    "/api/services/phu-thu",
+    [authJwt.verifyToken],
+    controller.createPhuThu
+  );
+
   app.get(
     "/api/services/phu-thu",
     [authJwt.verifyToken],
     controller.getPhuThuById
+  );
+
+  app.put(
+    "/api/services/phu-thu",
+    [authJwt.verifyToken],
+    controller.updatePhuThu
   );
 
   app.get(

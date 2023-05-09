@@ -5,6 +5,7 @@ const KhachHang = db.khachhang;
 const Phong = db.phong;
 const NhanVien = db.nhanvien;
 const TrangThaiDat = db.trangthaidat;
+const PhuThuDatPhong = db.phuthudatphong;
 const { getPagination, getPagingData } = require("../middlewares/pagination");
 
 var today = new Date();
@@ -23,6 +24,10 @@ exports.getAllDatPhong = (req, res) => {
       {
         model: Phong,
         as: "Phong",
+      },
+      {
+        model: PhuThuDatPhong,
+        as: "PhuThuDatPhong",
       },
       {
         model: NhanVien,
@@ -57,6 +62,10 @@ exports.getDatPhongById = (req, res) => {
       {
         model: Phong,
         as: "Phong",
+      },
+      {
+        model: PhuThuDatPhong,
+        as: "PhuThuDatPhong",
       },
       {
         model: NhanVien,
@@ -94,13 +103,12 @@ exports.createDatPhong = (req, res) => {
     NguoiLon: req.body.NguoiLon,
     TreEm: req.body.TreEm,
     GiaThue: req.body.GiaThue,
-    PhuThu: req.body.PhuThu,
     TongTien: req.body.TongTien,
     GhiChu: req.body.GhiChu,
     MaNhanVien: req.body.MaNhanVien,
     MaTrangThai: req.body.MaTrangThai,
   })
-    .then(() => {
+    .then((datphong) => {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -123,7 +131,7 @@ exports.createDatPhong = (req, res) => {
           console.log('Email sent: ' + info.response);
         }
       });
-      res.status(201).send({ message: "Tạo đơn đặt phòng thành công!" });
+      res.status(201).send(datphong);
     })
     .catch((err) => {
       res.status(500).send({ message: err.message });
@@ -144,7 +152,6 @@ exports.updateDatPhong = (req, res) => {
       NguoiLon: req.body.NguoiLon,
       TreEm: req.body.TreEm,
       GiaThue: req.body.GiaThue,
-      PhuThu: req.body.PhuThu,
       TongTien: req.body.TongTien,
       GhiChu: req.body.GhiChu,
       MaNhanVien: req.body.MaNhanVien,
@@ -171,25 +178,25 @@ exports.updateDatPhong = (req, res) => {
 };
 
 // Xóa đơn
-exports.deleteDatPhong = (req, res) => {
-  const id = req.query.id;
-  DatPhong.destroy({
-    where: { MaDatPhong: id },
-  })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "Xóa đơn thành công.",
-        });
-      } else {
-        res.send({
-          message: `Không thể xóa đơn. \nĐơn có thể không được tìm thấy!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: `Lỗi khi xóa đơn`,
-      });
-    });
-};
+// exports.deleteDatPhong = (req, res) => {
+//   const id = req.query.id;
+//   DatPhong.destroy({
+//     where: { MaDatPhong: id },
+//   })
+//     .then((num) => {
+//       if (num == 1) {
+//         res.send({
+//           message: "Xóa đơn thành công.",
+//         });
+//       } else {
+//         res.send({
+//           message: `Không thể xóa đơn. \nĐơn có thể không được tìm thấy!`,
+//         });
+//       }
+//     })
+//     .catch((err) => {
+//       res.status(500).send({
+//         message: `Lỗi khi xóa đơn`,
+//       });
+//     });
+// };

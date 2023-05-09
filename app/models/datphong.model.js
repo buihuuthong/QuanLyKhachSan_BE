@@ -34,10 +34,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       GiaThue: {
         type: Sequelize.BIGINT,
-      },
-      PhuThu: {
-        type: Sequelize.BIGINT,
-      },
+      },  
       TongTien: {
         type: Sequelize.BIGINT,
       },

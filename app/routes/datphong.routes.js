@@ -31,9 +31,9 @@ module.exports = function (app) {
     controller.updateDatPhong
   );
 
-  app.delete(
-    "/api/dat-phong/xoa-don",
-    [authJwt.verifyToken],
-    controller.deleteDatPhong
-  );
+  // app.delete(
+  //   "/api/dat-phong/xoa-don",
+  //   [authJwt.verifyToken],
+  //   controller.deleteDatPhong
+  // );
 };
