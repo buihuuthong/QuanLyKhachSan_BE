@@ -3,6 +3,7 @@ const controller = require("../controllers/auth.controller");
 const db = require("../models");
 const NhanVien = db.nhanvien;
 const KhachHang = db.khachhang;
+const passport = require("passport");
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -37,4 +38,21 @@ module.exports = function (app) {
   // Chung
 
   app.post("/api/auth/signout", controller.signout);
+
+  app.get("/api/google", passport.authenticate("google", ["profile", "email"]));
+
+  app.get(
+    "api/auth/google/callback",
+    passport.authenticate("google", {
+      successRedirect: process.env.CLIENT_URL,
+      failureRedirect: "api/login/failed",
+    })
+  );
+
+  app.get("api/login/failed", (req, res) => {
+    res.status(401).json({
+      error: true,
+      message: "Log in failure",
+    });
+  });
 };

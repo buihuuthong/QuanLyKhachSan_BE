@@ -26,6 +26,12 @@ module.exports = function (app) {
     controller.getDatPhongById
   );
 
+  app.get(
+    "/api/dat-phong/lich-su",
+    [authJwt.verifyToken],
+    controller.getDatPhongByClientId
+  );
+
   app.post(
     "/api/dat-phong/tao-don",
     [authJwt.verifyToken],

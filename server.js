@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
+const passport = require("passport")
+// const passportSetup = require('./app/middlewares/passport')
 
 const app = express();
 const db = require("./app/models");
@@ -24,6 +26,9 @@ app.use(
     httpOnly: true
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Synchronize models with the database
 db.sequelize.sync();

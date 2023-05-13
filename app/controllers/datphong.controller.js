@@ -100,6 +100,45 @@ exports.getDatPhongById = (req, res) => {
     });
 };
 
+// Lấy đơn đặt by id khách hàng
+exports.getDatPhongByClientId = (req, res) => {
+  const id = req.query.id;
+  DatPhong.findOne({
+    include: [
+      {
+        model: KhachHang,
+        as: "KhachHang",
+      },
+      {
+        model: Phong,
+        as: "Phong",
+      },
+      {
+        model: PhuThuDatPhong,
+        as: "PhuThuDatPhong",
+      },
+      {
+        model: NhanVien,
+        as: "NhanVien",
+      },
+      {
+        model: TrangThaiDat,
+        as: "TrangThaiDat",
+      },
+    ],
+    where: { MaKhachHang: id },
+  })
+    .then((datphong) => {
+      if (!datphong) {
+        return res.status(404).send({ message: "Không có đơn đặt" });
+      }
+      res.send(datphong);
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
 // Tạo đơn đặt phòng
 exports.createDatPhong = (req, res) => {
   const Email = req.body.Email;
