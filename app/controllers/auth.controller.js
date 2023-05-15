@@ -95,7 +95,8 @@ exports.signupKhachHang = (req, res) => {
     });
 };
 
-exports.signinKhachHang = (req, res) => {
+exports.signinKhachHang = (req, res, user) => {
+  console.log(user);
   KhachHang.findOne({
     where: {
       TaiKhoan: req.body.TaiKhoan,
@@ -149,5 +150,27 @@ exports.signout = async (req, res) => {
     });
   } catch (err) {
     next(err);
+  }
+};
+
+// Lấy dữ liệu người dùng khi đăng nhập bằng google
+exports.getUserGoogle = (req, res) => {
+  try {
+    const userData = req.session.user;
+
+    req.session.token = userData.accessToken;
+
+    res.status(200).send({
+      MaKhachHang: userData.MaKhachHang,
+      TaiKhoan: userData.TaiKhoan,
+      HoTen: userData.HoTen,
+      NgaySinh: userData.NgaySinh,
+      DiaChi: userData.DiaChi,
+      SDT: userData.SDT,
+      Email: userData.Email,
+      accessToken: userData.accessToken,
+    });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
   }
 };

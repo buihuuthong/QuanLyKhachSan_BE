@@ -39,15 +39,17 @@ module.exports = function (app) {
 
   app.post("/api/auth/signout", controller.signout);
 
-  app.get("/api/google", passport.authenticate("google", ["profile", "email"]));
+  app.get("/google", passport.authenticate("google", ["profile", "email"]));
 
   app.get(
-    "api/auth/google/callback",
+    "/auth/google/callback",
     passport.authenticate("google", {
       successRedirect: process.env.CLIENT_URL,
       failureRedirect: "api/login/failed",
     })
   );
+
+  app.get("/api/auth/google/user", controller.getUserGoogle)
 
   app.get("api/login/failed", (req, res) => {
     res.status(401).json({

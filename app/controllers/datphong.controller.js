@@ -103,7 +103,7 @@ exports.getDatPhongById = (req, res) => {
 // Lấy đơn đặt by id khách hàng
 exports.getDatPhongByClientId = (req, res) => {
   const id = req.query.id;
-  DatPhong.findOne({
+  DatPhong.findAll({
     include: [
       {
         model: KhachHang,
