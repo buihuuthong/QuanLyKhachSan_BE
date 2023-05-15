@@ -155,3 +155,30 @@ exports.deletePhong = (req, res) => {
       });
     });
 };
+
+// Cập nhật tình trạng phòng khi đặt
+exports.bookPhong = (req, res) => {
+  const id = req.session.MaPhong; 
+  Phong.update(
+    {
+      MaTinhTrang: req.session.TinhTrangPhong
+    },
+    { where: { MaPhong: req.session.MaPhong } }
+  )
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: "Cập nhật tình trạng phòng thành công.",
+        });
+      } else {
+        res.send({
+          message: `Không thể cập nhật tình trạng phòng. Phòng có thể không được tìm thấy!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `Lỗi khi cập nhật tình trạng phòng ${err}`,
+      });
+    });
+};

@@ -181,6 +181,8 @@ exports.createDatPhong = (req, res) => {
           console.log('Email sent: ' + info.response);
         }
       });
+      req.session.MaPhong = datphong.MaPhong;
+      req.session.TinhTrangPhong = 2;
       res.status(201).send(datphong);
     })
     .catch((err) => {
@@ -238,9 +240,20 @@ exports.cancelDatPhong = (req, res) => {
   )
     .then((num) => {
       if (num == 1) {
-        res.send({
-          message: "Hủy đơn đặt thành công.",
-        });
+        // Lấy thông tin phòng từ đơn đặt và cập nhật vào session
+        DatPhong.findByPk(id)
+          .then((datPhong) => {
+            req.session.MaPhong = datPhong.MaPhong;
+            req.session.TinhTrangPhong = 1;
+            res.send({
+              message: "Hủy đơn đặt thành công.",
+            });
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message: `Lỗi khi lấy thông tin phòng: ${err}`,
+            });
+          });
       } else {
         res.send({
           message: `Không thể hủy đơn đặt. \nĐơn đặt có thể không được tìm thấy!`,
@@ -249,10 +262,11 @@ exports.cancelDatPhong = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: `Lỗi khi hủy đơn ${err}`,
+        message: `Lỗi khi hủy đơn: ${err}`,
       });
     });
 };
+
 
 // Xóa đơn
 // exports.deleteDatPhong = (req, res) => {
