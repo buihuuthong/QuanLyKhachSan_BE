@@ -39,6 +39,12 @@ db.phong?.belongsTo(db.loaiphong, {
   as: "LoaiPhong",
 });
 
+db.phong?.belongsTo(db.datphong, {
+  foreignKey: "MaPhong",
+  targetKey: "MaPhong",
+  as: "DatPhong"
+});
+
 db.phong?.belongsTo(db.tinhtrangphong, {
   foreignKey: "MaTinhTrang",
   as: "TinhTrangPhong",

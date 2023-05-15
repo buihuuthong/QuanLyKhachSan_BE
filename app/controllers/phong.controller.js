@@ -2,6 +2,8 @@ const db = require("../models");
 const Phong = db.phong;
 const LoaiPhong = db.loaiphong;
 const TinhTrangPhong = db.tinhtrangphong;
+const DatPhong = db.datphong;
+const KhachHang = db.khachhang;
 const { getPagination, getPagingData } = require("../middlewares/pagination");
 
 // Đếm số lượng phòng
@@ -28,6 +30,23 @@ exports.getAllPhong = (req, res) => {
       {
         model: TinhTrangPhong,
         as: "TinhTrangPhong",
+      },
+      {
+        model: DatPhong,
+        as: "DatPhong",
+        attributes: [
+          "MaKhachHang",
+          "NgayNhan",
+          "NgayTra",
+          "GhiChu"
+        ],
+        include: [
+          {
+            model: KhachHang,
+            as: "KhachHang",
+            attributes: ["HoTen", "Email", "SDT"],
+          },
+        ],
       },
     ],
     limit,

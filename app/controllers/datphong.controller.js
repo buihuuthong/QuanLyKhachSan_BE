@@ -227,6 +227,33 @@ exports.updateDatPhong = (req, res) => {
     });
 };
 
+// Hủy đơn
+exports.cancelDatPhong = (req, res) => {
+  const id = req.query.id;
+  DatPhong.update(
+    {
+      MaTrangThai: 4
+    },
+    { where: { MaDatPhong: id } }
+  )
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: "Hủy đơn đặt thành công.",
+        });
+      } else {
+        res.send({
+          message: `Không thể hủy đơn đặt. \nĐơn đặt có thể không được tìm thấy!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `Lỗi khi hủy đơn ${err}`,
+      });
+    });
+};
+
 // Xóa đơn
 // exports.deleteDatPhong = (req, res) => {
 //   const id = req.query.id;

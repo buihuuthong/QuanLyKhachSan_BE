@@ -44,6 +44,13 @@ module.exports = function (app) {
     controller.updateDatPhong
   );
 
+  app.put(
+    "/api/dat-phong/huy-don",
+    [authJwt.verifyToken],
+    controller.cancelDatPhong
+  );
+
+
   // app.delete(
   //   "/api/dat-phong/xoa-don",
   //   [authJwt.verifyToken],
