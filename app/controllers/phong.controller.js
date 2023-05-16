@@ -38,13 +38,14 @@ exports.getAllPhong = (req, res) => {
           "MaKhachHang",
           "NgayNhan",
           "NgayTra",
-          "GhiChu"
+          "GhiChu",
+          "MaTrangThai"
         ],
         include: [
           {
             model: KhachHang,
             as: "KhachHang",
-            attributes: ["HoTen", "Email", "SDT"],
+            attributes: ["HoTen", "Email", "SDT",],
           },
         ],
       },
@@ -151,7 +152,7 @@ exports.deletePhong = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: `Lỗi khi xóa phòng`,
+        message: `Lỗi khi xóa phòng ` + err,
       });
     });
 };
